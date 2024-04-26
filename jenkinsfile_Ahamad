@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone SCM') {
+            steps {
+                echo 'Cloning MC-app code from Github'
+				git branch: 'main', url: 'https://github.com/Ahamad143/Ahmad-mindcircuit13.git'
+            }
+        }
+		 stage('Build Artifact') {
+            steps {
+                echo 'Importing artifact with Maven Build tool'
+				sh 'mvn clean install'
+            }
+			}
+			 stage('Deploy to Tomcat') {
+            steps {
+                echo 'Deploying artifact to tomcat webserver'
+				deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://75.101.220.122:8091')], contextPath: 'IPL', war: '**/*.war'
+            }
+		}
+    }
+}
