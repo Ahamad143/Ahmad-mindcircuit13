@@ -20,6 +20,6 @@ spec:
       - name: mc-app
         image: ahamadnaguri/projectab01:httpdimage
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 
   
